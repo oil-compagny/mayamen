@@ -22,6 +22,8 @@ public class Trajet  implements Serializable {
 	private float langitude ;
 	private float latitude ;
 	private float distance ;
+	private float latitudeArrivé ;
+	private float distanceArrivé ;
 
 	@OneToOne(mappedBy="trajet")
 	private Commande commande ;
@@ -38,6 +40,19 @@ public class Trajet  implements Serializable {
 	}
 	public void setLatitude(float latitude) {
 		this.latitude = latitude;
+	}
+	
+	public float getLatitudeArrivé() {
+		return latitudeArrivé;
+	}
+	public void setLatitudeArrivé(float latitudeArrivé) {
+		this.latitudeArrivé = latitudeArrivé;
+	}
+	public float getDistanceArrivé() {
+		return distanceArrivé;
+	}
+	public void setDistanceArrivé(float distanceArrivé) {
+		this.distanceArrivé = distanceArrivé;
 	}
 	public float getDistance() {
 		return distance;
@@ -84,6 +99,13 @@ public class Trajet  implements Serializable {
 	}
 	public Trajet() {
 		super();
+	}
+	@Override
+	public String toString() {
+		return "Trajet [id=" + id + ", addresse_depart=" + addresse_depart + ", addresse_arrivee=" + addresse_arrivee
+				+ ", tempsApro=" + tempsApro + ", langitude=" + langitude + ", latitude=" + latitude + ", distance="
+				+ distance + ", latitudeArrivé=" + latitudeArrivé + ", distanceArrivé=" + distanceArrivé + ", commande="
+				+ commande + ", traveaux=" + traveaux + "]";
 	}
 	
 }

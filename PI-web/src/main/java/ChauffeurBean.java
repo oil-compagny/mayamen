@@ -2,17 +2,26 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
+import org.primefaces.model.map.DefaultMapModel;
+import org.primefaces.model.map.LatLng;
+import org.primefaces.model.map.MapModel;
+import org.primefaces.model.map.Marker;
 
 import Entities.Commande;
 import Entities.Fleet;
 import Entities.Reservation;
+import Entities.Trajet;
 import Entities.User;
 import Services.ServiceWeb;
+import Services.UserService;
 
 
 @ManagedBean(name = "chauffeurBean",eager=true) 
@@ -33,20 +42,92 @@ public class ChauffeurBean implements Serializable{
 	private List<Reservation> reservations;
 	private String password;
 	private String name;
+	private String addresseAri="Gas Station Total Ariana" ;
+	private float langitude ;
+	private float latitude ;
+	private MapModel simpleModel;
+	private Trajet bestRoute;
+	private List<Trajet> markers ;
+	private List<Trajet> AllRoutes ;
+	private List<Trajet> BlockedRoutes ;
+	private Commande details ;
+
 	@EJB
 	ServiceWeb sw ;
+	@EJB
+	UserService us ;
 	
 	@ManagedProperty("#{loginBean}")
 	loginBean loginbean;
 	
+	public List<Trajet> AllRoadMethode(String add){
+	     addresseAri=add ;
+	     AllRoutes= us.AllRoutes(add);
+	     System.out.println("      *****************************************"+add);
+		return AllRoutes;
+	}
+	public Commande MoreDetails(int add)
+	{
+		details= sw.findCommandeById(add);
+		return details;
+	}
 	
+	public Commande getDetails() {
+		return details;
+	}
+	public void setDetails(Commande details) {
+		this.details = details;
+	}
+	public List<Trajet> BlockedRoadMethode(String add){
+	     addresseAri=add ;
+	     BlockedRoutes= us.BlockedRoute(add);
+	     System.out.println("      *****************************************"+add);
+		return BlockedRoutes;
+	}
 	public loginBean getLoginbean() {
 		return loginbean;
 	}
-
-
+	
 	public void setLoginbean(loginBean loginbean) {
 		this.loginbean = loginbean;
+	}
+
+
+	public List<Trajet> getMarkers() {
+		return markers;
+	}
+
+	public void setMarkers(List<Trajet> markers) {
+		this.markers = markers;
+	}
+
+	public String getAddresseAri() {
+		return addresseAri;
+	}
+
+
+	public void setAddresseAri(String addresseAri) {
+		this.addresseAri = addresseAri;
+	}
+
+
+	public float getLangitude() {
+		return langitude;
+	}
+
+
+	public void setLangitude(float langitude) {
+		this.langitude = langitude;
+	}
+
+
+	public float getLatitude() {
+		return latitude;
+	}
+
+
+	public void setLatitude(float latitude) {
+		this.latitude = latitude;
 	}
 
 
@@ -162,18 +243,80 @@ public class ChauffeurBean implements Serializable{
 	}
 
 	public List<Reservation> ChauffeurBeanMethode() {
-		// TODO Auto-generated constructor stub
-		reservations = sw.findReservationByDrierId(loginbean.getChauffeur().getId());//This is for testing purpose
-		System.out.println("**************"+loginbean.getChauffeur().getId()+"*******************"+reservations.size());
+	 reservations = sw.findReservationByDrierId(loginbean.getChauffeur().getId());
+	 
+	 System.out.println("**************"+loginbean.getChauffeur().getId()+"*******************"+reservations.size());
 		return reservations ;
 	}
 	
-	/*public String refreshDriver(){
-		
-		reservations = sw.findReservationByDrierId(1);//This is for testing purpose
-		System.out.println("*********************************"+reservations.size());
-		return "/Driver?faces-redirect=true";
-	}*/
+	public void addMarker() {
+        Trajet marker = new Trajet();
+        marker.setAddresse_arrivee("Gas Station Total Ariana");
+        us.PlusCourtChemin(addresseAri).get(0);
+          
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Marker Added", "Lat:" +langitude + ", Lng:" + langitude));
+    }
+//*********************************
+	public void AffichageKiosque(String add)
+	{
+		 List<Trajet> markers ;
+	     addresseAri=add ;
+	     markers= us.PlusCourtChemin("Gas Station Total Ariana");
+	     simpleModel = new DefaultMapModel();
+         
+	     for( Trajet a : markers){
+	    	 LatLng coord1 = new LatLng(a.getLatitudeArrivé(), a.getDistanceArrivé());
+	      
+	        simpleModel.addOverlay(new Marker(coord1,a.getAddresse_arrivee())); 	
+		}
+	}
+	public Trajet BestRoad(String add){
+	     addresseAri=add ;
+	     markers= us.PlusCourtChemin("Gas Station Total Ariana");
+	     System.out.println("      *****************************************"+add);
+	     bestRoute=markers.get(0);
+		return bestRoute;
+	}
+	
+	public MapModel getSimpleModel() {
+        return simpleModel;
+    }
 
+	public Trajet getBestRoute() {
+		return bestRoute;
+	}
+
+	public void setBestRoute(Trajet bestRoute) {
+		this.bestRoute = bestRoute;
+	}
+
+	public UserService getUs() {
+		return us;
+	}
+
+	public void setUs(UserService us) {
+		this.us = us;
+	}
+
+	public void setSimpleModel(MapModel simpleModel) {
+		this.simpleModel = simpleModel;
+	}
+
+	public List<Trajet> getAllRoutes() {
+		return AllRoutes;
+	}
+
+	public void setAllRoutes(List<Trajet> allRoutes) {
+		AllRoutes = allRoutes;
+	}
+
+	public List<Trajet> getBlockedRoutes() {
+		return BlockedRoutes;
+	}
+
+	public void setBlockedRoutes(List<Trajet> blockedRoutes) {
+		BlockedRoutes = blockedRoutes;
+	}
 	
 }
+

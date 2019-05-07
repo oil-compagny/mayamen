@@ -143,91 +143,7 @@
         font-size: 24px;
     }
 </style>
-<h:form id="form" style="width: 50%; margin-left : 25% ;margin-right : 25%">
 
-    <ui:repeat value="#{chauffeurBean.ChauffeurBeanMethode()}" var="car">
-              
- <h:panelGrid columns="2" style="width:100%" columnClasses="logo,detail">
-<img src="#{request.contextPath}/resources/images/#{car.img}"
-										style="width: 200; height: 200;" alt="pic1"
-										class="pull-left img-responsive" /> 
-            <p:outputPanel>
-                <h:panelGrid columns="2" cellpadding="5">
-                    <h:outputText value="Gas Satation Address :" />
-                    <h:outputText value="#{car.commande.adresse_arrive}" style="font-weight: bold"/>
- 
-                    <h:outputText value="Tanker :" />
-                    <h:outputText value="#{car.fleet.matricule}" style="font-weight: bold"/>
- 
-                    <h:outputText value="Deadline :" />
-                    <h:outputText value="#{car.commande.dateLimite_livraison}" style="font-weight: bold"/>
-                    <button type="button" class="btn btn-success" style="border-radius: 5px" aria-label="Left Align"
-                                        data-toggle="modal" data-target="#exampleModalScrollable" >
-                                  <span class="fa fa-plus" aria-hidden="true"></span> More Details
-                                </button>
-                                <!-- Modal -->
-                                <h:form>
-                                    <div class="modal fade" id="exampleModalScrollable"  tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle"   aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-scrollable" role="document" >
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalScrollableTitle" style="color: #f0c300">Here is more informations about the Order</h5>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                    </div>
-                                                     <div class="modal-body">
-                                                    <div class="form-group">
-                                                        <p:outputLabel style="color : #5a5e6b"> Fleet Number :&nbsp;&nbsp;&nbsp;</p:outputLabel>
-                                                        <p:outputLabel value="#{car.fleet.matricule}" style="font-weight: bold ; color:#95a595" > </p:outputLabel>
-                                                        
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <p:outputLabel style="color : #5a5e6b"> Provider full Name :&nbsp;&nbsp;&nbsp;</p:outputLabel>
-                                                        <p:outputLabel value="#{car.commande.fournisseur.name}  #{car.commande.fournisseur.last_name}" style="font-weight: bold ; color:#95a595" > </p:outputLabel>
-                                                        
-                                                    </div>
-                                                    
-                                                    <div class="form-group">
-                                                        <p:outputLabel style="color : #5a5e6b"> Provider Phone Number :&nbsp;&nbsp;&nbsp;</p:outputLabel>
-                                                        <p:outputLabel value="#{car.commande.fournisseur.phone}" style="font-weight: bold ; color:#95a595" > </p:outputLabel>
-                                                        
-                                                    </div>
-                                                    
-                                                     <div class="form-group">
-                                                        <p:outputLabel style="color : #5a5e6b"> Manager full Name :&nbsp;&nbsp;&nbsp;</p:outputLabel>
-                                                        <p:outputLabel value="#{car.commande.gerant.name}  #{car.commande.gerant.last_name}" style="font-weight: bold ; color:#95a595" > </p:outputLabel>
-                                                        
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <p:outputLabel style="color : #5a5e6b"> Manager Phone Number :&nbsp;&nbsp;&nbsp;</p:outputLabel>
-                                                        <p:outputLabel value="#{car.commande.gerant.phone} " style="font-weight: bold ; color:#95a595" > </p:outputLabel>
-                                                        
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <p:outputLabel style="color : #5a5e6b"> Deadline :&nbsp;&nbsp;&nbsp;</p:outputLabel>
-                                                        <p:outputLabel value="#{car.commande.dateLimite_livraison.date}/#{car.commande.dateLimite_livraison.month}/#{car.commande.dateLimite_livraison.year}" style="font-weight: bold ; color:#95a595" > </p:outputLabel>
-                                                     </div>
-                                                   
-                                                </div> 
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
-                                                </div>
-                                                </div>
-                                                
-                                                
-                                            </div>
-                                        </div>
-                                </h:form>
-                </h:panelGrid>
-            </p:outputPanel>
-        </h:panelGrid>
-          
-        
-    </ui:repeat>
-   
-    
-    </h:form> 
         </center>
         </h:body>
     </f:view>
@@ -333,9 +249,7 @@
         
 <div class="bottem-wthree-footer text-center pt-lg-5 pt-md-4 pt-3">
           
-<p> 
-           Esprit : where people die !<a href="http://www.W3Layouts.com" target="_blank">That's the ugly truth :) </a>
-          </p>
+
         </div>
         <!-- move icon -->
         
